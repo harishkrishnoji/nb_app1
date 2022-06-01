@@ -2,12 +2,18 @@
 from django import forms
 from nautobot.utilities.forms import (
     BootstrapMixin,
+    DateTimePicker,
 )
 
 from maintenance_notices import models
 
 class MaintenanceNoticeForm(BootstrapMixin, forms.ModelForm):
     """MaintenanceNotice creation/edit form."""
+
+    start_time = forms.DateTimeField(
+        widget=DateTimePicker(attrs={"placeholder": "Maintenance Start Date and Time"}),
+        label="Start Time",
+    )
 
     class Meta:
         """Meta attributes."""

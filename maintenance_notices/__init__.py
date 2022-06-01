@@ -15,7 +15,7 @@ class MaintenanceNoticesConfig(PluginConfig):
     """Plugin configuration for the maintenance_notices plugin."""
 
     name = "maintenance_notices"  # Raw plugin name; same as the plugin's source directory.
-    verbose_name = "maintenance_notices"  # Human-friendly name for the plugin.
+    verbose_name = "Maintenance Notices"  # Human-friendly name for the plugin.
     version = __version__
     author = "Harish Krishnoji"
     description = "Nautobot plugin to manage maintenance notices"

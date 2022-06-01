@@ -21,3 +21,20 @@ menu_items = (
     )
 )
 """
+
+add_maintenancenotice_button = PluginMenuButton(
+    link='plugins:maintenance_notices:maintenancenotice_add',
+    title='Add a new maintenance notice',
+    icon_class='mdi mdi-plus-thick',
+    color=ButtonColorChoices.GREEN,
+    permissions=['maintenance_notices.add_maintenancenotice'],
+)
+
+menu_items = (
+    PluginMenuItem(
+        link='plugins:maintenance_notices:maintenancenotice_list',
+        link_text='Maintenance Notices',
+        buttons=[add_maintenancenotice_button],
+        permissions=['maintenance_notices.view_maintenancenotice'],
+    ),
+)
