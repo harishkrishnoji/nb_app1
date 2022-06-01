@@ -1,21 +1,21 @@
-from datetime import datetime, timedelta, timezone
-from nautobot.utilities.testing import TestCase
-
+from datetime import datetime, timezone
+from django.test import override_settings
+from nautobot.utilities.testing import ModelViewTestCase
 from maintenance_notices import models
 
-class TestMaintenanceNotice(TestCase):
-    """Test Maintenance Notice Model."""
+class TestMaintenanceNoticeViews(ModelViewTestCase):
+    """Test Maintenance Notice Views."""
+
+    model = models.MaintenanceNotice
 
     @classmethod
     def setUpTestData(cls):
-        cls.maintenance = models.MaintenanceNotice.objects.create(
-            start_time=datetime.now(timezone.utc),
-            duration=30,
-        )
+        """Create two Maintenance Notices for view testing."""
+        maintenance_1 = models.MaintenanceNotice.objects.create(start_time=datetime.now(timezone.utc), duration=30)
+        maintenance_2 = models.MaintenanceNotice.objects.create(start_time=datetime.now(timezone.utc), duration=60)
 
-    def test_end_time(self):
-        # import pdb; pdb.set_trace()
-        self.assertEqual(
-            self.maintenance.end_time,
-            self.maintenance.start_time + timedelta(minutes=self.maintenance.duration),
-        )
+    @override_settings(EXEMPT_VIEW_PERMISSIONS=["maintenance_notices.maintenancenotice"])
+    def test_list_view(self):
+        self.client.logout()
+        response = self.client.get("/plugins/maintenance_notices/maintenancenotice/")
+        self.assertHttpStatus(response, 200)

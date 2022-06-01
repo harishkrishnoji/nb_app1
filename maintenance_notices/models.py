@@ -39,3 +39,6 @@ class MaintenanceNotice(BaseModel):
     def save(self, *args, **kwargs):
         self.end_time = self.start_time + timedelta(minutes=self.duration)
         super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('plugins:maintenance_notices:maintenancenotice', args=[self.pk])
