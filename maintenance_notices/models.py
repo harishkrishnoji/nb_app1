@@ -29,8 +29,8 @@ class MaintenanceNotice(BaseModel):
         verbose_name_plural = "Maintenance Notices"
 
     def __str__(self):
-        return f"{self.comments} {self.devices} {self.start_time:%Y-%m-%d %H:%M} ({self.duration} minutes)"
-        # return f"{self.start_time:%Y-%m-%d %H:%M} ({self.duration} minutes)"
+        # return f"{self.comments} {self.devices} {self.start_time:%Y-%m-%d %H:%M} ({self.duration} minutes)"
+        return f"{self.start_time:%Y-%m-%d %H:%M} ({self.duration} minutes)"
 
     def get_absolute_url(self):
         """Return absolute URL for instance."""

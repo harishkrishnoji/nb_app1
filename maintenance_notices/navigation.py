@@ -37,4 +37,10 @@ menu_items = (
         buttons=[add_maintenancenotice_button],
         permissions=['maintenance_notices.view_maintenancenotice'],
     ),
+    PluginMenuItem(
+        link='plugins:maintenance_notices:maintenancenotice_active_list',
+        link_text='Active Maintenance Notices',
+        permissions=['maintenance_notices.view_maintenancenotice'],
+        buttons=[add_maintenancenotice_button],
+    ),
 )

@@ -1,8 +1,12 @@
 """Views for Maintenance Notices."""
 
 from nautobot.core.views import generic
+from django.conf import settings
+from django.utils import timezone
 
 from maintenance_notices import forms, models, tables
+
+SETTINGS = settings.PLUGINS_CONFIG['maintenance_notices']
 
 class MaintenanceNoticeListView(generic.ObjectListView):
     """List view."""
@@ -11,6 +15,10 @@ class MaintenanceNoticeListView(generic.ObjectListView):
     table = tables.MaintenanceNoticeTable
     action_buttons = ("add",)
 
+class ActiveMaintenanceNoticeListView(MaintenanceNoticeListView):
+    """List view for Active Notices."""
+
+    queryset = models.MaintenanceNotice.objects.filter(end_time__gt=timezone.now())
 
 class MaintenanceNoticeView(generic.ObjectView):
     """Detail view."""
@@ -30,10 +38,10 @@ class MaintenanceNoticeCreateView(MaintenanceNoticeEditView):
     """Create view."""
 
     def alter_obj(self, obj, request, *args, **kwargs):
-        """Insert user into object."""
+        """Insert default values into the object."""
         obj.created_by = request.user
+        obj.duration = SETTINGS.get('default_duration')
         return obj
-
 
 class MaintenanceNoticeDeleteView(generic.ObjectDeleteView):
     """Delete view."""
